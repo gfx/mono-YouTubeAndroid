@@ -10,7 +10,7 @@ using Android.OS;
 namespace YouTubeAndroidSample
 {
 	[Activity (Label = "YouTubeAndroidSample", MainLauncher = true)]
-	public class Activity1 : Activity
+	public class MainActivity : Activity
 	{
 		int count = 1;
 
