@@ -1,4 +1,7 @@
 using System;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
 using Android.App;
 using Android.Content;
@@ -7,6 +10,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 
+using Org.Json;
+
 using Com.Google.Android.Youtube.Player;
 
 namespace YouTubeAndroidSample
@@ -14,9 +19,6 @@ namespace YouTubeAndroidSample
 	[Activity (Label = "YouTubeAndroidSample", MainLauncher = true)]
 	public class MainActivity : Activity
 	{
-		private const string API_KEY = "YOUR_API_KEY_HERE";
-		
-
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
@@ -24,18 +26,27 @@ namespace YouTubeAndroidSample
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
-
 			var button = FindViewById<Button> (Resource.Id.myButton);
-			button.Click += delegate {
+			button.Click += async delegate {
+				var account = new JSONObject(await ReadAccountInfo());
+				var apiKey  = account.GetString("api_key");
+
 				var videoId = "us8j93EZt4U";
 
 				var intent = YouTubeStandalonePlayer.CreateVideoIntent(
 					this,
-					API_KEY,
+					apiKey,
 					videoId
 				);
 				StartActivity (intent);
 			};
+		}
+
+		private async Task<string> ReadAccountInfo() {
+			var stream = this.Resources.OpenRawResource(Resource.Raw.account);
+			using (var s = new StreamReader(stream, Encoding.UTF8)) {
+				return await s.ReadToEndAsync();
+			}
 		}
 	}
 }

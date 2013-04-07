@@ -3,3 +3,6 @@
 bin/
 obj/
 *.userprefs
+
+# includes Google API key
+account.json
