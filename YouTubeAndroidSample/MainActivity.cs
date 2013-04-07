@@ -7,12 +7,15 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 
+using Com.Google.Android.Youtube.Player;
+
 namespace YouTubeAndroidSample
 {
 	[Activity (Label = "YouTubeAndroidSample", MainLauncher = true)]
 	public class MainActivity : Activity
 	{
-		int count = 1;
+		private const string API_KEY = "YOUR_API_KEY_HERE";
+		
 
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -21,12 +24,17 @@ namespace YouTubeAndroidSample
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
-			// Get our button from the layout resource,
-			// and attach an event to it
-			Button button = FindViewById<Button> (Resource.Id.myButton);
-			
+
+			var button = FindViewById<Button> (Resource.Id.myButton);
 			button.Click += delegate {
-				button.Text = string.Format ("{0} clicks!", count++);
+				var videoId = "us8j93EZt4U";
+
+				var intent = YouTubeStandalonePlayer.CreateVideoIntent(
+					this,
+					API_KEY,
+					videoId
+				);
+				StartActivity (intent);
 			};
 		}
 	}

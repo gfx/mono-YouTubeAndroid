@@ -61,4 +61,10 @@
     <AndroidResource Include="Resources\drawable\Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\YouTubeAndroid\YouTubeAndroid.csproj">
+      <Project>{150DB199-CB99-4E27-8CB6-4380FA9080C2}</Project>
+      <Name>YouTubeAndroid</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
